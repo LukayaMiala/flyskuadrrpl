@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLY SKUAD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background: linear-gradient(180deg, #000, #222);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #a03507;
+            text-shadow: 2px 2px 4px rgba(104, 102, 102, 0.5); /* Sombra preta com desfoque */
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .games-section {
+            padding: 50px 20px;
+        }
+
+        .game-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+
+        .game-container::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .game-container::-webkit-scrollbar-thumb {
+            background: #f1c40f;
+            border-radius: 5px;
+        }
+
+        .game-container::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        .game-card {
+            flex: 0 0 300px;
+            margin: 0 15px;
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .game-card h3 {
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: center;
+            color: #f1c40f;
+        }  
+
+        .game-card p {
+            padding: 0 15px 15px;
+            text-align: center;
+        }
+
+        .video-section {
+            padding: 50px 20px;
+        }
+
+        .video-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .video-card {
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-card iframe {
+            width: 100%;
+            height: 200px;
+        }
+
+        .video-card h3 {
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: center;
+            color: #f1c40f;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #111;
+            margin-top: 50px;
+        }
+
+          /* Modal Styles */
+          .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.836);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #f1c40f;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .video-intro {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.video-intro video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1c40f;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.video-overlay.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.video-overlay.hide {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+/*Style para a sessão de venda de bilhetes*/
+/* Ticket Section */
+.ticket-section {
+    padding: 50px 20px;
+    text-align: center;
+    background: linear-gradient(180deg, #222, #111);
+    color: #fff;
+}
+
+.ticket-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.ticket-section p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+.ticket-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.ticket-card {
+    background: #111;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ticket-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.ticket-card h3 {
+    font-size: 1.5em;
+    margin: 15px 0;
+}
+
+.ticket-card p {
+    font-size: 1em;
+    padding: 0 10px 20px;
+    color: #ddd;
+}
+
+.ticket-card button {
+    background: linear-gradient(45deg, #FF8C00, #FF4500, #FFD700);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    transform: translateY(-25px); /* Desloca o botão para cima */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra preta com desfoque */
+}
+
+.ticket-card button:hover {
+    background: linear-gradient(45deg, #FF4500, #FF8C00);
+}
+
+.ticket-card :hover {
+    transition:background 0.3s; ;
+}
+
+
+#countdownTimer {
+    font-size: 1.2em;
+    color: #f1c40f;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1 1 auto;
+        }
+        .logo img {
+            width: 60px;
+            height: 60px; 
+            border-radius: 50%;
+            border: 2px solid #FF8C00;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+        }
+     .logo img:hover{
+        background: linear-gradient(45deg, #FF4500, #FF8C00);
+     }   
+
+       /*Estilo do hr "Barras de separador de sessao" */
+/* Estilo base da linha horizontal */
+hr {
+    border: none;
+    height: 6px;
+    width: 60%; /* Comprimento ajustável */
+    margin: 50px auto; /* Centraliza a linha */
+    background: linear-gradient(135deg, #6b24028e, #2b1201, #9e2f03);
+    border-radius: 12px; /* Bordas arredondadas */
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(189, 131, 92, 0.7),
+                0 0 21px rgba(75, 92, 94, 0.8),
+                0 0 25px #FF4500;
+    animation: pulse-glow 4s ease-in-out infinite alternate;
+    transition: all 0.6s ease;
+}
+
+/* Partículas flutuantes animadas */
+hr::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 10%, transparent 40%);
+    opacity: 0.4;
+    animation: floating-particles 6s infinite linear;
+    pointer-events: none;
+}
+
+/* Faixa de luz brilhante animada */
+hr::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    background: linear-gradient(90deg, transparent, rgba(77, 77, 77, 0.596), transparent);
+    animation: light-sweep 3s infinite linear;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* Animação de partículas flutuantes */
+@keyframes floating-particles {
+    0% {
+        transform: translateY(-30%) translateX(-20%);
+    }
+    50% {
+        transform: translateY(30%) translateX(20%);
+    }
+    100% {
+        transform: translateY(-30%) translateX(-20%);
+    }
+}
+
+/* Animação de luz em movimento */
+@keyframes light-sweep {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Efeito de pulso neon */
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 5px rgba(117, 117, 117, 0.658),
+                    0 0 10px rgba(39, 39, 39, 0.6),
+                    0 0 20px rgba(92, 23, 2, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(158, 38, 2, 0.8),
+                    0 0 15px rgba(11, 17, 17, 0.9),
+                    0 0 20px rgba(145, 54, 1, 0.938);
+    }
+}
+
+/* Efeito interativo no hover */
+hr:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #FF8C00, #FF4500, #FFD700);
+    box-shadow: 0 0 40px rgba(31, 18, 11, 0.758),
+                0 0 50px rgb(71, 13, 3),
+                0 0 60px rgb(31, 32, 32);
+}
+
+
+@media (max-width: 768px) {
+  .ticket-section h2 {
+    font-size: 22px; /* Reduz tamanho para tablets ou smartphones maiores */
+  }
+  .video-section h2{
+    font-size: 22px; 
+  }
+  .games-sectionh2{
+    font-size: 22px; 
+}
+}
+
+@media (max-width: 480px) {
+  .ticket-section h2 {
+    font-size: 20.5px; /* Reduz ainda mais para smartphones menores */
+  }
+  .video-section h2{
+    font-size: 20px; 
+  }
+  .games-section h2{
+    font-size: 20px; 
+}
+header h1 {
+            font-size: 1.8em;
+            color: #a03507;
+            text-shadow: 2px 2px 4px rgba(104, 102, 102, 0.5); /* Sombra preta com desfoque */
+        }
+
+}
+
+/* Estilo do modal */
+.modal {
+    display: none; /* Inicialmente escondido */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com opacidade */
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Animação para o modal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Estilo do conteúdo do modal */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 40px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transform: translateY(-50px);
+    animation: slideUp 0.3s ease-out forwards;
+}
+
+/* Animação de subida do modal */
+@keyframes slideUp {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Estilo do título */
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF8C00;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo da descrição */
+.modal-description {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Estilo do botão de fechar */
+.close {
+    color: #aaa;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #FF8C00;
+}
+
+/* Estilo do botão de enviar */
+.btn-submit {
+    background-color: #FF8C00;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-submit:hover {
+    background-color: #FF4500;
+    transform: translateY(-3px);
+}
+
+.btn-submit:active {
+    transform: translateY(1px);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .modal-title {
+        font-size: 20px;
+    }
+
+    .modal-description {
+        font-size: 14px;
+    }
+
+    .btn-submit {
+        width: 100%;
+    }
+}
+/* Estilo do modal */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none; /* Inicialmente escondido */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com opacidade */
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Animação para o modal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Estilo do conteúdo do modal */
+/* Conteúdo do Modal */
+.modal-content {
+    background: linear-gradient(135deg, #fefefe, #e6d9b4, #d1c2a2);
+  border-radius: 20px;
+  margin: 10% auto;
+  padding: 30px;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 6px 6px rgba(0, 0, 0, 0.22);
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.5s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Animação de subida do modal */
+@keyframes slideUp {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Estilo do título */
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF8C00;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo da descrição */
+.modal-description {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Estilo do botão de fechar */
+.close {
+    color: #aaa;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #FF8C00;
+}
+
+/* Estilo do botão de enviar */
+.btn-submit {
+    background-color: #FF8C00;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-submit:hover {
+    background-color: #FF4500;
+    transform: translateY(-3px);
+}
+
+.btn-submit:active {
+    transform: translateY(1px);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .modal-title {
+        font-size: 20px;
+    }
+
+    .modal-description {
+        font-size: 14px;
+    }
+
+    .btn-submit {
+        width: 100%;
+    }
+}
+
+
+#ticket-name {
+    font-weight: bold;
+    color: #FF8C00;
+}
+
+/* Logotipo Circular */
+.circular-logo {
+  margin: 0 auto 20px auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #FF4500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.3);
+  animation: pulse 2s infinite;
+}
+.circular-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Animação Pulsante para o Logo */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.modal-content p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+        <img src="logo.jpg" alt="LukMi Casino Logo">
+        <h1>Fly SKUAD - RRPL</h1>
+    </div>
+        <!--<nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Games</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav> -->
+    </header>
+
+    <div class="video-intro">
+        <video autoplay muted loop>
+            <source src="intro.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay" id="videoOverlay">
+            <h2>Welcome to Casino Royale</h2>
+            <p>Experience the thrill of winning!</p>
+        </div>
+    </div>    
+
+<!-- Sessão de vendas de bilhetes -->
+<section class="ticket-section">
+    <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747); background: linear-gradient(45deg, #FF8C00, #FF4500, #707070); border-radius: 9px;">RESERVA JÁ O SEU LUGAR</h2>
+    <hr>
+    <p style="color: #fff;">Adquira seus ingressos agora e não perca a emoção do entretenimento e a oportunidade de ver o CR7 Angolano ao vivo!</p>
+    <div class="ticket-container">
+        <div class="ticket-card">
+            <img src="final.jpg" alt="Show 1">
+            <h3>ÁREA VIP</h3>
+            <p>Apenas 10.000,00 AOA</p>
+            <button class="buy-button" data-show="Área VIP">Reservar agora</button>
+        </div>
+        <div class="ticket-card">
+            <img src="final.jpg" alt="Show 2">
+            <h3>ÁREA NORMAL</h3>
+            <p>Apenas 7.000,00 AOA</p>
+            <button class="buy-button" data-show="Área Normal">Reservar agora</button>
+        </div>
+        <div class="ticket-card">
+            <img src="final.jpg" alt="Show 3">
+            <h3>VISTA PELO ZOOM</h3>
+            <p>Apenas 5.000,00 AOA</p>
+            <button class="buy-button" data-show="Magic Show">Reservar agora</button>
+        </div>
+    </div> 
+</section>
+
+<!-- Modal --> 
+<div id="ticketModal" class="modal">
+    <div class="modal-content">
+      <!-- Botão de Fechar -->
+      <span class="close">&times;</span>
+  
+      <!-- Logotipo Circular -->
+    <div class="circular-logo">
+        <img src="logo.jpg" alt="Logotipo">
+      </div>  
+  
+      <!-- Conteúdo do Modal -->
+      <h3 id="ticket-name" class="modal-title"></h3>
+      <h2 style="color: #000;">Parabéns pela sua escolha!</h2>
+      <p id="modal-text" class="modal-description"></p>
+      <h4 style="color: #000;"><strong>FAÇA O PAGAMENTO COM: </strong></h4>
+      <div style="border-top: 2px solid #000; margin: 20px 0;"></div>
+      <p id="modal-text" style="margin-top: 5px; margin-bottom: 5px;"><strong style="color: #FF4500;">IBAN: </strong>0040.0000.7655.3332.1125.2</p>
+      <p id="modal-text" style="margin-bottom: 5px;"><strong style="color: #FF4500;">PAYPAL:</strong> reisdorompimento@gmail.com</p>
+      <p id="modal-text"><strong style="color: #FF4500; margin-bottom: 5px;">EXPRESS:</strong> 929574330</p>
+      <p id="modal-text"><strong style="color: #FF4500; font-size: 15px; text-align: left;">TITULAR:</strong> REIS DO ROMPIMENTO PRIMEIRA LIGA</p>
+      <h3 id="ticket-name" style="color: #FF4500; font-weight: bold;"></h3>
+  
+      <!-- Botão Enviar Comprovante -->
+      <button id="submitReceipt" class="btn-submit">Enviar Comprovante</button>
+    </div>
+  </div>
+  
+
+<script>
+    const overlay = document.getElementById('videoOverlay');
+
+    // Função para alternar entre mostrar e esconder
+    function toggleOverlay() {
+        overlay.classList.toggle('show');
+        overlay.classList.toggle('hide');
+    }
+
+    // Exibe inicialmente e alterna a cada 3 segundos
+    overlay.classList.add('show');
+    setInterval(toggleOverlay, 6000); // 3s para fadeOut e 3s para fadeIn
+
+    // Seleciona todos os botões de reserva
+const ticketButtons = document.querySelectorAll('.buy-button');
+
+// Seleciona o modal e os elementos dentro dele
+const reserveModal = document.getElementById('ticketModal');
+const modalContentText = document.getElementById('modal-text');
+const selectedTicketName = document.getElementById('ticket-name');
+const submitReceiptButton = document.getElementById('submitReceipt');
+
+// Função para abrir o modal
+ticketButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const showName = this.getAttribute('data-show');
+        selectedTicketName.textContent = showName;
+
+        // Mensagens diferentes para cada tipo de show
+        if (showName === 'Área VIP') {
+            modalContentText.textContent = 'Você fez uma excelente escolha! A Área VIP oferece uma experiência exclusiva com muito conforto e proximidade ao CR7 Angolano!';
+        } else if (showName === 'Área Normal') {
+            modalContentText.textContent = 'A Área Normal também oferece uma ótima visão e muita diversão. Prepare-se para uma grande batalha!';
+        } else if (showName === 'Magic Show') {
+            modalContentText.textContent = 'Prepare-se para uma experiência mágica e cheia de surpresas no Magic Show!';
+        }
+
+        // Exibe o modal
+        reserveModal.style.display = "flex";
+    });
+});
+
+// Função para fechar o modal
+const closeReserveModal = document.querySelector('.close');
+closeReserveModal.addEventListener('click', function() {
+    reserveModal.style.display = "none";
+});
+
+// Fechar o modal quando clicar fora dele
+window.addEventListener('click', function(event) {
+    if (event.target === reserveModal) {
+        reserveModal.style.display = "none";
+    }
+});
+
+// Função para redirecionar ao WhatsApp
+submitReceiptButton.addEventListener('click', function() {
+    const phoneNumber = "942214654"; // Número de telefone do WhatsApp
+    const message = encodeURIComponent(`Olá, gostaria de enviar meu comprovante para o show "${selectedTicketName.textContent}".`); // Mensagem personalizada
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.location.href = whatsappURL; // Redireciona para o WhatsApp
+});
+
+
+</script>
+    
+    <section class="games-section">
+        <h2 style="text-align: center; margin-bottom: 20px; background: linear-gradient(45deg, #FF8C00, #FF4500, #707070); border-radius: 9px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);">BATALHAS MAIS VISTAS NA T11</h2>
+        <hr>
+        <div class="game-container">
+            <!-- Game cards -->
+            <div class="game-card"  data-image="fly.jpg">
+                <img src="fly.jpg" alt="Game 1">
+                <h3>Blackjack</h3>
+                <p>Try your luck at the classic card game!</p>
+            </div>
+
+            <div class="game-card"  data-image="fly1.jpg">
+                <img src="fly1.jpg" alt="Game 2">
+                <h3>Roulette</h3>
+                <p>Spin the wheel and win big!</p>
+            </div>
+
+            <!-- Repeat for 10 games -->
+            <div class="game-card"  data-image="fly2.jpg">
+                <img src="fly2.jpg" alt="Game 3">
+                <h3>Slot Machines</h3>
+                <p>Spin and match to win prizes!</p>
+            </div>
+
+            <div class="game-card"  data-image="fly3.jpg">
+                <img src="fly3.jpg" alt="Game 4">
+                <h3>Texas Hold'em</h3>
+                <p>The ultimate poker experience!</p>
+            </div>
+
+            <div class="game-card"  data-image="fly4.jpg">
+              <img src="fly4.jpg" alt="Game 4">
+              <h3>Texas Hold'em</h3>
+              <p>The ultimate poker experience!</p>
+          </div>
+
+          <div class="game-card"  data-image="fly5.jpg">
+            <img src="fly5.jpg" alt="Game 5">
+            <h3>Texas Hold'em</h3>
+            <p>The ultimate poker experience!</p>
+        </div>
+
+        <div class="game-card" data-image="fly6.jpg">
+          <img src="fly6.jpg" alt="Game 6">
+          <h3>Texas Hold'em</h3>
+          <p>The ultimate poker experience!</p>
+      </div>
+
+       <div class="game-card" data-image="fly7.jpg">
+        <img src="fly7.jpg" alt="Game 8">
+        <h3>Texas Hold'em</h3>
+        <p>The ultimate poker experience!</p>
+      </div>
+
+      <div class="game-card" data-image="fly8.jpg">
+       <img src="fly8.jpg" alt="Game 9">
+       <h3>Texas Hold'em</h3>
+       <p>The ultimate poker experience!</p>
+     </div>
+
+      <div class="game-card" data-image="fly9.avif">
+       <img src="fly9.avif" alt="Game 10">
+       <h3>Texas Hold'em</h3>
+       <p>The ultimate poker experience!</p>
+     </div>
+
+      <div class="game-card" data-image="fly10.webp">
+       <img src="fly10.webp" alt="Game 11">
+       <h3>Texas Hold'em</h3>
+       <p>The ultimate poker experience!</p>
+     </div>
+            <!-- Add more game cards here -->
+        </div>
+
+         <!-- Moldar paras imagens -->
+        <div class="modal" id="imageModal">
+          <span class="modal-close" id="closeModal">&times;</span>
+          <img src="fly1.jpg" alt="Game Image" id="modalImage">
+      </div>
+
+    </section>
+
+    <section class="video-section">
+        <h2 style="background: linear-gradient(45deg, #FF8C00, #FF4500, #707070); border-radius: 9px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);">FLY PODCASTs MAIS VISTOS /2024</h2>
+        <hr>
+        <div class="video-grid">
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                <h3>Video 1</h3>
+            </div>
+
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                <h3>Video 2</h3>
+            </div>
+
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                <h3>Video 3</h3>
+            </div>
+
+            <div class="video-card">
+                <iframe src="https://youtu.be/tkvWnPCGTQQ?si=f3cICJNRemDpIGTI" frameborder="0" allowfullscreen></iframe>
+                <h3>Video 4</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="games-section">
+        <h2 style="text-align: center; margin-bottom: 20px; background: linear-gradient(45deg, #FF8C00, #FF4500, #707070); border-radius: 9px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);">BATALHAS MAIS VISTAs </h2>
+        <hr>
+        <div class="game-container">
+            <!-- Game cards -->
+            <div class="game-card"  data-image="fly.jpg">
+                <img src="fly.jpg" alt="Game 1">
+                <h3>Blackjack</h3>
+                <p>Try your luck at the classic card game!</p>
+            </div>
+
+            <div class="game-card"  data-image="fly1.jpg">
+                <img src="fly1.jpg" alt="Game 2">
+                <h3>Roulette</h3>
+                <p>Spin the wheel and win big!</p>
+            </div>
+
+            <!-- Repeat for 10 games -->
+            <div class="game-card"  data-image="batalha/podcast.jpg">
+                <img src="batalha/podcast.jpg" alt="Game 3">
+                <h3>Slot Machines</h3>
+                <p>Spin and match to win prizes!</p>
+            </div>
+
+            <div class="game-card"  data-image="batalha/podcast1.jpg">
+                <img src="batalha/podcast1.jpg" alt="Game 4">
+                <h3>Texas Hold'em</h3>
+                <p>The ultimate poker experience!</p>
+            </div>
+
+            <div class="game-card"  data-image="batalha/podcast3.jpg">
+              <img src="batalha/podcast3.jpg" alt="Game 4">
+              <h3>Texas Hold'em</h3>
+              <p>The ultimate poker experience!</p>
+          </div>
+
+          <div class="game-card"  data-image="batalha/podcast5.jpg">
+            <img src="batalha/podcast5.jpg" alt="Game 5">
+            <h3>Texas Hold'em</h3>
+            <p>The ultimate poker experience!</p>
+        </div>
+
+        <div class="game-card" data-image="batalha/podcast6.jpg">
+          <img src="batalha/podcast6.jpg" alt="Game 6">
+          <h3>Texas Hold'em</h3>
+          <p>The ultimate poker experience!</p>
+      </div>
+
+            <!-- Add more game cards here -->
+        </div>
+
+         <!-- Moldar paras imagens -->
+        <div class="modal" id="imageModal">
+          <span class="modal-close" id="closeModal">&times;</span>
+          <img src="fly1.jpg" alt="Game Image" id="modalImage">
+      </div>
+
+    </section>
+
+    <section class="video-section">
+        <h2 style="background: linear-gradient(45deg, #FF8C00, #FF4500, #707070); border-radius: 9px;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);">FLY PODCASTs MAIS VISTOS</h2>
+        <hr>
+        <div class="video-grid">
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                <h3>Video 1</h3>
+            </div>
+
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                <h3>Video 2</h3>
+            </div>
+
+            <div class="video-card">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                <h3>Video 3</h3>
+            </div>
+
+            <div class="video-card">
+                <iframe src="https://youtu.be/tkvWnPCGTQQ?si=f3cICJNRemDpIGTI" frameborder="0" allowfullscreen></iframe>
+                <h3>Video 4</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gladiadores mais destacados do ano -->
+<section class="highlighted-gladiators-section">
+    <h2>REIS RRPL</h2>
+    <hr style="margin-bottom: 15px; margin-top: 3px;">
+    <div class="gladiators-container">
+        <div class="gladiator-card">
+            <img src="reais/reit11.jpg" alt="Gladiador 11" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-11/2024</h5>
+            <h3>KANGA DJ</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit10.jpg" alt="Gladiador 10" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-10/2023</h5>
+            <h3>SALOMÃO REI</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit9.jpg" alt="Gladiador 09" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-09/2022</h5>
+            <h3>Gladiador 3</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit8.jpg" alt="Gladiador 08" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-08/2021</h5>
+            <h3>Gladiador 3</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit7.jpg" alt="Gladiador 07" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-07/2020</h5>
+            <h3>Gladiador 4</h3>        
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit6.jpg" alt="Gladiador 06" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-06/2019</h5>
+            <h3>Gladiador 5</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit10.jpg" alt="Gladiador 05" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-05/2018</h5>
+            <h3>Gladiador 6</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit11.jpg" alt="Gladiador 04" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-04/2017</h5>
+            <h3>Gladiador 7</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit6.jpg" alt="Gladiador 03" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-03/2016</h5>
+            <h3>Gladiador 8</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit8.jpg" alt="Gladiador 02" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-02/2015</h5>
+            <h3>Gladiador 9</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit9.jpg" alt="Gladiador 01" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-01/2014</h5>
+            <h3>Gladiador 10</h3>
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Patrocinadores -->
+<section class="sponsors" id="sponsors">
+    <div class="container">
+      <h2>Patrocinadores</h2>
+      <hr style="margin-top: -10px; margin-bottom: 25px;">
+      <div class="sponsor-grid">
+        <div class="sponsor-item">
+          <img src="patrocio/bantubet.png" alt="Patrocinador 1">
+          <p>Bantubet</p>
+        </div>
+        <div class="sponsor-item">
+          <img src="patrocio/patrocionio.png" alt="Patrocinador 2">
+          <p>Unitel</p>
+        </div>  
+      </div>
+    </div>
+  </section>  
+
+   <!-- Seção Redes Sociais -->
+   <section class="social-section">
+    <h2 style="    font-size: 1.5rem;
+    margin-bottom: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgb(0, 0, 0);
+    text-shadow: 3px 3px 6px #9e2f03;">Acompanha-nos</h2>
+    <hr style="margin-top: -10px; margin-bottom: 35px;">
+    <div class="social-icons">
+        <div class="social-icon facebook">
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+        </div>
+        <div class="social-icon youtube">
+            <a href="https://www.youtube.com" target="_blank">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        <div class="social-icon instagram">
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <div class="social-icon tiktok">
+            <a href="https://www.tiktok.com" target="_blank">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+    <footer>
+        <p>&copy; 2024 Casino Royale. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Add interactivity if needed
+        const gameContainer = document.querySelector('.game-container');
+
+        // Example: Scroll Left/Right Buttons (optional)
+        // Add buttons or other functionalities if needed
+    </script>
+     <script>
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const closeModal = document.getElementById('closeModal');
+      const gameCards = document.querySelectorAll('.game-card');
+
+      gameCards.forEach(card => {
+          card.addEventListener('click', () => {
+              const imageSrc = card.getAttribute('data-image');
+              modalImage.src = imageSrc;
+              modal.style.display = 'flex';
+          });
+      });
+
+      closeModal.addEventListener('click', () => {
+          modal.style.display = 'none';
+      });
+
+      modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+              modal.style.display = 'none';
+          }
+      });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+  /* Gladiadores Mais Destacados */
+  .highlighted-gladiators-section {
+    background: #111;
+    padding: 50px 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.highlighted-gladiators-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);
+}
+
+.gladiators-container {
+    display: flex;
+    gap: 30px;
+    padding: 10px 0;
+    scroll-behavior: smooth; /* Suaviza o movimento do scroll */
+    overflow-x: scroll;
+}
+
+.gladiator-card {
+    background: #222;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 150px;
+    transition: transform 0.3s;
+    flex-shrink: 0; /* Impede o encolhimento */
+}
+
+.gladiator-card:hover {
+    transform: scale(1.1);
+}
+
+.gladiator-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 4px solid #f1c40f;
+}
+
+.gladiator-card h3 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+hr {
+    border: none;
+    height: 6px;
+    width: 60%;
+    margin: 20px auto;
+    background: linear-gradient(135deg, #6b24028e, #2b1201, #9e2f03);
+    border-radius: 12px;
+}
+
+/* Estilo do scroll */
+.gladiators-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.gladiators-container::-webkit-scrollbar-thumb {
+    background: #f1c40f;
+    border-radius: 10px;
+}
+
+.gladiators-container::-webkit-scrollbar-track {
+    background: #333;
+}
+
+.highlighted-gladiators-section h2{
+    font-size: 2.5em; /* Tamanho do título */
+text-align: center;
+color: #000000; /* Cor dourada base */
+text-shadow: 
+    0 0 5px #f1c40f, /* Sombra suave em volta */
+    0 0 10px #f1c40f, /* Efeito de brilho externo */
+    0 0 15px #f1c40f, 
+    0 0 20px #e67e22, /* Efeito de transição mais quente */
+    0 0 30px #e67e22; /* Brilho mais forte */
+background: linear-gradient(45deg, #f39c12, #f1c40f, #e67e22); /* Gradiente dourado */
+background-clip: text; /* Aplica o gradiente apenas no texto */
+-webkit-background-clip: text; /* Suporte para Webkit browsers */
+font-weight: bold; /* Peso do texto para maior destaque */
+padding: 10px; /* Espaçamento interno */
+letter-spacing: 2px; /* Espaçamento entre as letras */
+text-transform: uppercase; /* Maiúsculas para mais impacto */
+transition: transform 0.3s ease, text-shadow 0.3s ease; /* Transição suave */
+}
+
+.highlighted-gladiators-section h2:hover {
+transform: scale(1.05); /* Aumenta o tamanho do texto ao passar o mouse */
+text-shadow: 
+    0 0 15px #f1c40f, 
+    0 0 30px #f1c40f, 
+    0 0 45px #e67e22, 
+    0 0 60px #e67e22;
+}
+
+/* Estilos para a seção de patrocinadores */
+.sponsors {
+    padding: 50px 20px;
+    background: linear-gradient(112deg, #eb3507, #0031d3);
+    text-align: center;
+    color: #fff;
+  }
+  .sponsors h2 {
+    font-size: 1.7rem;
+    margin-bottom: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgb(0, 0, 0);
+    text-shadow: 3px 3px 6px #9e2f03;
+  }
+  .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    align-items: center;
+    justify-items: center;
+  }
+  .sponsor-item {
+    text-align: center;
+  }
+  .sponsor-item img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid #bd3d0a;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .sponsor-item img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    border-color: #ffdfba;
+  }
+  .sponsor-item p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+  }
+
+   /* Redes Sociais */
+   .social-section {
+    background: #111111c9;
+    padding: 60px 20px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.social-section h2 {
+    font-size: 1.7rem;
+    margin-bottom: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgb(0, 0, 0);
+    text-shadow: 3px 3px 6px #9e2f03;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+}
+
+.social-icon {
+    background: #fff;
+    border-radius: 50%;
+    padding: 20px;
+    font-size: 2.5em;
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.social-icon i {
+    transition: color 0.3s ease;
+}
+
+/* Cores reais de cada rede social */
+.social-icon.facebook {
+    background-color: #3b5998;
+}
+
+.social-icon.youtube {
+    background-color: #FF0000;
+}
+
+.social-icon.instagram {
+    background-color: #E4405F;
+}
+
+.social-icon.tiktok {
+    background-color: #000000;
+}
+
+/* Efeito de hover */
+.social-icon:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+.social-icon.facebook:hover {
+    background-color: #3b5998;
+    border-color: #fff;
+}
+
+.social-icon.youtube:hover {
+    background-color: #FF0000;
+    border-color: #fff;
+}
+
+.social-icon.instagram:hover {
+    background-color: #E4405F;
+    border-color: #fff;
+}
+
+.social-icon.tiktok:hover {
+    background-color: #000000;
+    border-color: #fff;
+}
+
+.social-icon a {
+    color: #fff;
+}
+
+.social-icon:hover i {
+    color: #fff;
+}
+
+.social-icons p {
+ font-size: 1.2rem;
+ font-weight: 300;
+ margin: 0;
+ color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .social-icons {
+        gap: 20px;
+    }
+    .social-icon {
+        font-size: 2.2em;
+        width: 70px;
+        height: 70px;
+    }
+}

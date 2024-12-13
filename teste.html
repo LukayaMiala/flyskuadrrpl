@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casino Online</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background: linear-gradient(180deg, #000, #222);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #a03507;
+            text-shadow: 2px 2px 4px rgba(104, 102, 102, 0.5); /* Sombra preta com desfoque */
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .games-section {
+            padding: 50px 20px;
+        }
+
+        .game-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+
+        .game-container::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .game-container::-webkit-scrollbar-thumb {
+            background: #f1c40f;
+            border-radius: 5px;
+        }
+
+        .game-container::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        .game-card {
+            flex: 0 0 300px;
+            margin: 0 15px;
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .game-card h3 {
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: center;
+            color: #f1c40f;
+        }  
+
+        .game-card p {
+            padding: 0 15px 15px;
+            text-align: center;
+        }
+
+        .video-section {
+            padding: 50px 20px;
+        }
+
+        .video-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .video-card {
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-card iframe {
+            width: 100%;
+            height: 200px;
+        }
+
+        .video-card h3 {
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: center;
+            color: #f1c40f;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #111;
+            margin-top: 50px;
+        }
+
+          /* Modal Styles */
+          .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.836);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #f1c40f;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .video-intro {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.video-intro video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1c40f;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.video-overlay.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.video-overlay.hide {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+/*Style para a sessão de venda de bilhetes*/
+/* Ticket Section */
+.ticket-section {
+    padding: 50px 20px;
+    text-align: center;
+    background: linear-gradient(180deg, #222, #111);
+    color: #fff;
+}
+
+.ticket-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.ticket-section p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+.ticket-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.ticket-card {
+    background: #111;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ticket-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.ticket-card h3 {
+    font-size: 1.5em;
+    margin: 15px 0;
+}
+
+.ticket-card p {
+    font-size: 1em;
+    padding: 0 10px 20px;
+    color: #ddd;
+}
+
+.ticket-card button {
+    background: linear-gradient(45deg, #FF8C00, #FF4500, #FFD700);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    transform: translateY(-25px); /* Desloca o botão para cima */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra preta com desfoque */
+}
+
+.ticket-card button:hover {
+    background: linear-gradient(45deg, #FF4500, #FF8C00);
+}
+
+.ticket-card :hover {
+    transition:background 0.3s; ;
+}
+
+
+#countdownTimer {
+    font-size: 1.2em;
+    color: #f1c40f;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+    /* Gladiadores Mais Destacados */
+    .highlighted-gladiators-section {
+        background: #111;
+        padding: 50px 20px;
+        color: #fff;
+        text-align: center;
+    }
+
+    .highlighted-gladiators-section h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);
+    }
+
+    .gladiators-container {
+        display: flex;
+        gap: 30px;
+        overflow-x: auto; /* Permite o scroll horizontal */
+        padding: 10px 0;
+        scroll-behavior: smooth; /* Suaviza o movimento do scroll */
+    }
+
+    .gladiator-card {
+        background: #222;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        width: 150px;
+        transition: transform 0.3s;
+        flex-shrink: 0; /* Impede o encolhimento */
+    }
+
+    .gladiator-card:hover {
+        transform: scale(1.1);
+    }
+
+    .gladiator-image {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 10px;
+        border: 4px solid #f1c40f;
+    }
+
+    .gladiator-card h3 {
+        color: #fff;
+        font-size: 1.2em;
+        margin-top: 10px;
+    }
+
+    hr {
+        border: none;
+        height: 6px;
+        width: 60%;
+        margin: 20px auto;
+        background: linear-gradient(135deg, #6b24028e, #2b1201, #9e2f03);
+        border-radius: 12px;
+    }
+
+    /* Estilo do scroll */
+    .gladiators-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .gladiators-container::-webkit-scrollbar-thumb {
+        background: #f1c40f;
+        border-radius: 10px;
+    }
+
+    .gladiators-container::-webkit-scrollbar-track {
+        background: #333;
+    }
+
+    .highlighted-gladiators-section h2{
+        font-size: 2.5em; /* Tamanho do título */
+    text-align: center;
+    color: #000000; /* Cor dourada base */
+    text-shadow: 
+        0 0 5px #f1c40f, /* Sombra suave em volta */
+        0 0 10px #f1c40f, /* Efeito de brilho externo */
+        0 0 15px #f1c40f, 
+        0 0 20px #e67e22, /* Efeito de transição mais quente */
+        0 0 30px #e67e22; /* Brilho mais forte */
+    background: linear-gradient(45deg, #f39c12, #f1c40f, #e67e22); /* Gradiente dourado */
+    background-clip: text; /* Aplica o gradiente apenas no texto */
+    -webkit-background-clip: text; /* Suporte para Webkit browsers */
+    font-weight: bold; /* Peso do texto para maior destaque */
+    padding: 10px; /* Espaçamento interno */
+    letter-spacing: 2px; /* Espaçamento entre as letras */
+    text-transform: uppercase; /* Maiúsculas para mais impacto */
+    transition: transform 0.3s ease, text-shadow 0.3s ease; /* Transição suave */
+    }
+
+    .highlighted-gladiators-section h2:hover {
+    transform: scale(1.05); /* Aumenta o tamanho do texto ao passar o mouse */
+    text-shadow: 
+        0 0 15px #f1c40f, 
+        0 0 30px #f1c40f, 
+        0 0 45px #e67e22, 
+        0 0 60px #e67e22;
+}
+
+ /* Estilos para a seção de patrocinadores */
+.sponsors {
+  padding: 50px 20px;
+  background: linear-gradient(112deg, #eb3507, #0031d3);
+  text-align: center;
+  color: #fff;
+}
+.sponsors h2 {
+  font-size: 1.7rem;
+  margin-bottom: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgb(0, 0, 0);
+  text-shadow: 3px 3px 6px #9e2f03;
+}
+.sponsor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  align-items: center;
+  justify-items: center;
+}
+.sponsor-item {
+  text-align: center;
+}
+.sponsor-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 3px solid #bd3d0a;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.sponsor-item img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  border-color: #ffdfba;
+}
+.sponsor-item p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: #fff;
+}
+
+  /* Redes Sociais */
+  .social-section {
+            background: #111;
+            padding: 60px 20px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .social-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #f1c40f;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
+        }
+
+        .social-icon {
+            background: #fff;
+            border-radius: 50%;
+            padding: 20px;
+            font-size: 2.5em;
+            color: #fff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid transparent;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .social-icon i {
+            transition: color 0.3s ease;
+        }
+
+        /* Cores reais de cada rede social */
+        .social-icon.facebook {
+            background-color: #3b5998;
+        }
+
+        .social-icon.youtube {
+            background-color: #FF0000;
+        }
+
+        .social-icon.instagram {
+            background-color: #E4405F;
+        }
+
+        .social-icon.tiktok {
+            background-color: #000000;
+        }
+
+        /* Efeito de hover */
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .social-icon.facebook:hover {
+            background-color: #3b5998;
+            border-color: #fff;
+        }
+
+        .social-icon.youtube:hover {
+            background-color: #FF0000;
+            border-color: #fff;
+        }
+
+        .social-icon.instagram:hover {
+            background-color: #E4405F;
+            border-color: #fff;
+        }
+
+        .social-icon.tiktok:hover {
+            background-color: #000000;
+            border-color: #fff;
+        }
+
+        .social-icon a {
+            color: #fff;
+        }
+
+        .social-icon:hover i {
+            color: #fff;
+        }
+
+        .social-icons p {
+         font-size: 1.2rem;
+         font-weight: 300;
+         margin: 0;
+         color: #fff;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .social-icons {
+                gap: 20px;
+            }
+            .social-icon {
+                font-size: 2.2em;
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+        <img src="logo.jpg" alt="LukMi Casino Logo">
+        <h1>Fly SKUAD - RRPL</h1>
+    </div>
+        <!--<nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Games</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav> -->
+    </header>
+
+    <div class="video-intro">
+        <video autoplay muted loop>
+            <source src="intro.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay" id="videoOverlay">
+            <h2>Welcome to Casino Royale</h2>
+            <p>Experience the thrill of winning!</p>
+        </div>
+    </div>    
+<!-- Gladiadores mais destacados do ano -->
+<section class="highlighted-gladiators-section">
+    <h2>REIS RRPL</h2>
+    <hr>
+    <div class="gladiators-container">
+        <div class="gladiator-card">
+            <img src="reais/reit11.jpg" alt="Gladiador 11" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-11/2024</h5>
+            <h3>KANGA DJ</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit10.jpg" alt="Gladiador 10" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-10/2023</h5>
+            <h3>SALOMÃO REI</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit9.jpg" alt="Gladiador 09" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-09/2022</h5>
+            <h3>Gladiador 3</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit8.jpg" alt="Gladiador 08" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-08/2021</h5>
+            <h3>Gladiador 3</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit7.jpg" alt="Gladiador 07" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-07/2020</h5>
+            <h3>Gladiador 4</h3>        
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit6.jpg" alt="Gladiador 06" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-06/2019</h5>
+            <h3>Gladiador 5</h3>
+        </div>
+        <div class="gladiator-card">
+            <img src="reais/reit10.jpg" alt="Gladiador 05" class="gladiator-image">
+            <h5 style="color: #FF4500; font-size: 14px;">REI T-05/2018</h5>
+            <h3>Gladiador 6</h3>
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Patrocinadores -->
+<section class="sponsors" id="sponsors">
+    <div class="container">
+      <h2>Patrocinadores</h2>
+      <hr style="margin-top: -10px; margin-bottom: 25px;">
+      <div class="sponsor-grid">
+        <div class="sponsor-item">
+          <img src="patrocio/bantubet.png" alt="Patrocinador 1">
+          <p>Bantubet</p>
+        </div>
+        <div class="sponsor-item">
+          <img src="patrocio/patrocionio.png" alt="Patrocinador 2">
+          <p>Unitel</p>
+        </div>  
+      </div>
+    </div>
+  </section>  
+
+  <!-- Seção Redes Sociais -->
+  <section class="social-section">
+    <h2>Conecte-se Conosco</h2>
+    <div class="social-icons">
+        <div class="social-icon facebook">
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+        </div>
+        <div class="social-icon youtube">
+            <a href="https://www.youtube.com" target="_blank">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        <div class="social-icon instagram">
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <div class="social-icon tiktok">
+            <a href="https://www.tiktok.com" target="_blank">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+    <footer>
+        <p>&copy; 2024 Casino Royale. All Rights Reserved.</p>
+    </footer>
+    
+    <!-- JavaScript para rolagem automática -->
+    <script>
+        // Função para mover a rolagem horizontalmente
+        const gladiatorsContainer = document.querySelector('.gladiators-container');
+        let gladiatorScrollAmount = 0;
+    
+        function autoScrollGladiators() {
+            if (gladiatorScrollAmount >= gladiatorsContainer.scrollWidth - gladiatorsContainer.clientWidth) {
+                gladiatorScrollAmount = 0; // Reseta o scroll quando atingir o final
+            } else {
+                gladiatorScrollAmount += 1; // Avança lentamente no scroll
+            }
+            gladiatorsContainer.scrollLeft = gladiatorScrollAmount;
+        }
+    
+        // Inicia o scroll automático a cada 20ms
+        setInterval(autoScrollGladiators, 20);
+    </script>
+</html>
