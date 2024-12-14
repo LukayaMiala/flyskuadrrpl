@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video with Professional Sound Toggle</title>
+    <title>Video with Enhanced Professional Design</title>
     <style>
-        /* Estilo da área do vídeo */
+        /* Área do vídeo */
         .video-intro {
             position: relative;
             width: 100%;
@@ -20,29 +20,42 @@
             object-fit: cover;
         }
 
-        /* Estilo do botão de som */
+        /* Botão de som estilizado */
         #soundToggle {
             position: absolute;
             bottom: 20px;
             right: 20px;
-            padding: 12px 18px;
-            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
             color: #f1c40f;
-            border: 2px solid #f1c40f;
-            font-size: 16px;
+            border: none;
+            font-size: 20px;
             cursor: pointer;
             z-index: 10;
-            border-radius: 30px;
+            border-radius: 50%;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
         #soundToggle:hover {
             background: #f1c40f;
             color: #000;
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
 
-        /* Estilo da sobreposição */
+        #soundToggle .icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        #soundToggle.active .icon {
+            transform: rotate(360deg);
+        }
+
+        /* Sobreposição no vídeo */
         .video-overlay {
             position: absolute;
             top: 0;
@@ -56,21 +69,23 @@
             background: rgba(0, 0, 0, 0.5);
             color: #f1c40f;
             text-align: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             pointer-events: none;
         }
 
         .video-overlay h2 {
             font-size: 36px;
             margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .video-overlay p {
             font-size: 18px;
             margin: 10px 0 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
         }
 
-        /* Responsividade para dispositivos menores */
+        /* Responsividade */
         @media (max-width: 768px) {
             .video-intro {
                 height: 250px;
@@ -85,8 +100,9 @@
             }
 
             #soundToggle {
-                padding: 10px 14px;
-                font-size: 14px;
+                width: 50px;
+                height: 50px;
+                font-size: 18px;
             }
         }
     </style>
@@ -101,20 +117,25 @@
             <h2>Welcome to Casino Royale</h2>
             <p>Experience the thrill of winning!</p>
         </div>
-        <button id="soundToggle">🔈 Unmute</button>
+        <button id="soundToggle">
+            <span class="icon">🔈</span>
+        </button>
     </div>
 
     <script>
         const video = document.getElementById('introVideo');
         const soundToggle = document.getElementById('soundToggle');
+        const icon = soundToggle.querySelector('.icon');
 
         soundToggle.addEventListener('click', () => {
             if (video.muted) {
                 video.muted = false;
-                soundToggle.textContent = '🔇 Mute'; // Atualiza o texto do botão
+                icon.textContent = '🔇'; // Ícone para "Mute"
+                soundToggle.classList.add('active');
             } else {
                 video.muted = true;
-                soundToggle.textContent = '🔈 Unmute'; // Atualiza o texto do botão
+                icon.textContent = '🔈'; // Ícone para "Unmute"
+                soundToggle.classList.remove('active');
             }
         });
     </script>
