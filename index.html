@@ -848,7 +848,23 @@ header h1 {
             <span class="icon">🔈</span>
         </button>
     </div> 
+    <script>
+        const video = document.getElementById('introVideo');
+        const soundToggle = document.getElementById('soundToggle');
+        const icon = soundToggle.querySelector('.icon');
 
+        soundToggle.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                icon.textContent = '🔇'; // Ícone para "Mute"
+                soundToggle.classList.add('active');
+            } else {
+                video.muted = true;
+                icon.textContent = '🔈'; // Ícone para "Unmute"
+                soundToggle.classList.remove('active');
+            }
+        });
+    </script>
 <!-- Sessão de vendas de bilhetes -->
 <section class="ticket-section">
     <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747); background: linear-gradient(45deg, #FF8C00, #FF4500, #707070); border-radius: 9px;">RESERVA JÁ O SEU LUGAR</h2>
@@ -967,22 +983,6 @@ submitReceiptButton.addEventListener('click', function() {
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
     window.location.href = whatsappURL; // Redireciona para o WhatsApp
 });
-
-        const video = document.getElementById('introVideo');
-        const soundToggle = document.getElementById('soundToggle');
-        const icon = soundToggle.querySelector('.icon');
-
-        soundToggle.addEventListener('click', () => {
-            if (video.muted) {
-                video.muted = false;
-                icon.textContent = '🔇'; // Ícone para "Mute"
-                soundToggle.classList.add('active');
-            } else {
-                video.muted = true;
-                icon.textContent = '🔈'; // Ícone para "Unmute"
-                soundToggle.classList.remove('active');
-            }
-        });
 </script>
     
     <section class="games-section">
