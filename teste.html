@@ -612,15 +612,18 @@
     </header>
 
     <div class="video-intro">
-        <video autoplay muted loop>
+        <video id="introVideo" autoplay loop playsinline muted>
             <source src="intro.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div class="video-overlay" id="videoOverlay">
+        <div class="video-overlay">
             <h2>Welcome to Casino Royale</h2>
             <p>Experience the thrill of winning!</p>
         </div>
-    </div>    
+        <button id="soundToggle">
+            <span class="icon">🔈</span>
+        </button>
+    </div>
 <!-- Gladiadores mais destacados do ano -->
 <section class="highlighted-gladiators-section">
     <h2>REIS RRPL</h2>
