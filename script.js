@@ -14,3 +14,20 @@
 
     // Inicia o scroll automático a cada 20ms
     setInterval(autoScrollGladiators, 20);
+
+        const video = document.getElementById('introVideo');
+        const soundToggle = document.getElementById('soundToggle');
+        const icon = soundToggle.querySelector('.icon');
+
+        soundToggle.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                icon.textContent = '🔇'; // Ícone para "Mute"
+                soundToggle.classList.add('active');
+            } else {
+                video.muted = true;
+                icon.textContent = '🔈'; // Ícone para "Unmute"
+                soundToggle.classList.remove('active');
+            }
+        });
+
