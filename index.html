@@ -819,10 +819,6 @@ header h1 {
   margin-bottom: 20px;
 }
 
-/* Container do botão */
-.container-botao {
-  align-items: center; /* Centraliza o botão verticalmente */
-}
  /* Estilo do botão */
  .botaoagora {
     background: linear-gradient(45deg, #FF4500, #707070, #FF8C00);
@@ -1018,8 +1014,8 @@ submitReceiptButton.addEventListener('click', function() {
         <hr>
         <div class="game-container">
             <!-- Game cards -->
-            <div class="game-card"  data-image="fly.jpg">
-                <img src="fly.jpg" alt="Game 1">
+            <div class="game-card" >
+                <div data-image="fly.jpg"> <img src="fly.jpg" alt="Game 1"></div>
                 <h3>Blackjack</h3>
                 <p>Try your luck at the classic card game!</p>
                 <div class="container-botao">
