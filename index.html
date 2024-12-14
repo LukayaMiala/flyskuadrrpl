@@ -872,7 +872,6 @@ header h1 {
             <span class="icon">🔈</span>
         </button>
     </div> 
-    
 <!-- Sessão de vendas de bilhetes -->
 <section class="ticket-section">
     <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747); background: linear-gradient(45deg, #FF8C00, #FF4500, #707070); border-radius: 9px;">RESERVA JÁ O SEU LUGAR</h2>
@@ -926,7 +925,71 @@ header h1 {
       <!-- Botão Enviar Comprovante -->
       <button id="submitReceipt" class="btn-submit">Enviar Comprovante</button>
     </div>
-  </div>
+</div>
+
+<script>
+    // Função para alternar entre mostrar e esconder o overlay de vídeo
+    const overlay = document.getElementById('videoOverlay');
+    function toggleOverlay() {
+        overlay.classList.toggle('show');
+        overlay.classList.toggle('hide');
+    }
+
+    overlay.classList.add('show');
+    setInterval(toggleOverlay, 6000); // Alterna entre mostrar e esconder a cada 6 segundos (3s para fadeOut e 3s para fadeIn)
+
+    // Seleciona todos os botões de reserva
+    const ticketButtons = document.querySelectorAll('.buy-button');
+
+    // Seleciona o modal e os elementos dentro dele
+    const reserveModal = document.getElementById('ticketModal');
+    const modalContentText = document.getElementById('modal-text');
+    const selectedTicketName = document.getElementById('ticket-name');
+    const submitReceiptButton = document.getElementById('submitReceipt');
+
+    // Função para abrir o modal
+    ticketButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const showName = this.getAttribute('data-show');
+            console.log("Botão clicado para o show: " + showName); // Verifique se o log aparece no console.
+
+            selectedTicketName.textContent = showName;
+
+            // Mensagens diferentes para cada tipo de show
+            if (showName === 'Área VIP') {
+                modalContentText.textContent = 'Você fez uma excelente escolha! A Área VIP oferece uma experiência exclusiva com muito conforto e proximidade ao CR7 Angolano!';
+            } else if (showName === 'Área Normal') {
+                modalContentText.textContent = 'A Área Normal também oferece uma ótima visão e muita diversão. Prepare-se para uma grande batalha!';
+            } else if (showName === 'Magic Show') {
+                modalContentText.textContent = 'Prepare-se para uma experiência mágica e cheia de surpresas no Magic Show!';
+            }
+
+            // Exibe o modal
+            reserveModal.style.display = "flex";
+        });
+    });
+
+    // Função para fechar o modal
+    const closeReserveModal = document.querySelector('.close');
+    closeReserveModal.addEventListener('click', function() {
+        reserveModal.style.display = "none";
+    });
+
+    // Fechar o modal quando clicar fora dele
+    window.addEventListener('click', function(event) {
+        if (event.target === reserveModal) {
+            reserveModal.style.display = "none";
+        }
+    });
+
+    // Função para redirecionar ao WhatsApp
+    submitReceiptButton.addEventListener('click', function() {
+        const phoneNumber = "923700928"; // Número de telefone do WhatsApp
+        const message = encodeURIComponent(`Olá, esse é o meu comprovante para a Batalha dos Gigantes "${selectedTicketName.textContent}".`); // Mensagem personalizada
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+        window.location.href = whatsappURL; // Redireciona para o WhatsApp
+    });
+</script>
     
     <section class="games-section">
         <h2 style="text-align: center; margin-bottom: 20px; background: linear-gradient(45deg, #FF8C00, #FF4500, #707070); border-radius: 9px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.747);">BATALHAS MAIS VISTAS NA T11</h2>
