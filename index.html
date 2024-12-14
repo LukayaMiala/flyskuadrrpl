@@ -818,6 +818,31 @@ header h1 {
   color: #555;
   margin-bottom: 20px;
 }
+
+ /* Estilo do botão */
+ .botaoagora {
+    background: linear-gradient(45deg, #FF4500, #707070, #FF8C00);
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda padrão */
+    padding: 15px 30px; /* Tamanho adequado */
+    font-size: 18px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito no texto */
+    border-radius: 30px; /* Bordas arredondadas */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    transition: background-color 0.3s, transform 0.3s; /* Animação suave */
+  }
+
+  /* Efeito de hover para o botão */
+  .botaoagora:hover {
+    background: linear-gradient(45deg, #FF8C00, #FF4500);
+    transform: scale(1.1); /* Leve aumento de tamanho */
+  }
+
+  /* Efeito de foco para acessibilidade */
+  .botaoagora:focus {
+    outline: none; /* Remove o contorno padrão */
+    box-shadow: 0 0 5px rgba(26, 29, 32, 0.594); /* Adiciona sombra */
+  }
     </style>
 </head>
 <body>
