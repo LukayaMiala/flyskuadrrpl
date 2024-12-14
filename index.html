@@ -1002,8 +1002,8 @@ window.addEventListener('click', function(event) {
 
 // Função para redirecionar ao WhatsApp
 submitReceiptButton.addEventListener('click', function() {
-    const phoneNumber = "942214654"; // Número de telefone do WhatsApp
-    const message = encodeURIComponent(`Olá, gostaria de enviar meu comprovante para o show "${selectedTicketName.textContent}".`); // Mensagem personalizada
+    const phoneNumber = "923700928"; // Número de telefone do WhatsApp
+    const message = encodeURIComponent(`Olá, esse é o meu comprovante para a Batalha dos Gigantes "${selectedTicketName.textContent}".`); // Mensagem personalizada
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
     window.location.href = whatsappURL; // Redireciona para o WhatsApp
 });
