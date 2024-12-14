@@ -900,7 +900,7 @@ header h1 {
 </section>
 
 <!-- Modal --> 
-<div id="ticketModal" class="modal">
+<div id="ticketModal" class="modal" style="display: none;">
     <div class="modal-content">
       <!-- Botão de Fechar -->
       <span class="close">&times;</span>
@@ -928,16 +928,6 @@ header h1 {
 </div>
 
 <script>
-    // Função para alternar entre mostrar e esconder o overlay de vídeo
-    const overlay = document.getElementById('videoOverlay');
-    function toggleOverlay() {
-        overlay.classList.toggle('show');
-        overlay.classList.toggle('hide');
-    }
-
-    overlay.classList.add('show');
-    setInterval(toggleOverlay, 6000); // Alterna entre mostrar e esconder a cada 6 segundos (3s para fadeOut e 3s para fadeIn)
-
     // Seleciona todos os botões de reserva
     const ticketButtons = document.querySelectorAll('.buy-button');
 
