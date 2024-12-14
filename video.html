@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video with Sound Toggle</title>
+    <title>Video with Sound</title>
     <style>
         .video-intro {
             position: relative;
@@ -17,6 +17,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            pointer-events: none; /* Evita interação direta com o vídeo */
         }
 
         .video-overlay {
@@ -35,24 +36,24 @@
             pointer-events: none;
         }
 
-        #soundToggle {
+        #playButton {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 15px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
             background: #f1c40f;
             color: #000;
             border: none;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             z-index: 10;
-            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <div class="video-intro">
-        <video id="introVideo" autoplay loop playsinline muted>
+        <video id="introVideo" loop playsinline>
             <source src="intro.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -60,21 +61,16 @@
             <h2>Welcome to Casino Royale</h2>
             <p>Experience the thrill of winning!</p>
         </div>
-        <button id="soundToggle">Unmute</button>
+        <button id="playButton">Play</button>
     </div>
 
     <script>
         const video = document.getElementById('introVideo');
-        const soundToggle = document.getElementById('soundToggle');
+        const playButton = document.getElementById('playButton');
 
-        soundToggle.addEventListener('click', () => {
-            if (video.muted) {
-                video.muted = false;
-                soundToggle.textContent = 'Mute'; // Muda o texto do botão para "Mute"
-            } else {
-                video.muted = true;
-                soundToggle.textContent = 'Unmute'; // Muda o texto do botão para "Unmute"
-            }
+        playButton.addEventListener('click', () => {
+            video.play(); // Inicia o vídeo
+            playButton.style.display = 'none'; // Oculta o botão após a interação
         });
     </script>
 </body>
