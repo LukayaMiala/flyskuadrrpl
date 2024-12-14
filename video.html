@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video with Enhanced Professional Design</title>
+    <title>Enhanced Video Section</title>
     <style>
-        /* Área do vídeo */
+        /* Container principal da área de vídeo */
         .video-intro {
             position: relative;
             width: 100%;
-            height: 400px;
+            height: 450px;
             overflow: hidden;
             margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
         }
 
         .video-intro video {
@@ -20,42 +22,7 @@
             object-fit: cover;
         }
 
-        /* Botão de som estilizado */
-        #soundToggle {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #f1c40f;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 10;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        #soundToggle:hover {
-            background: #f1c40f;
-            color: #000;
-            transform: scale(1.2);
-        }
-
-        #soundToggle .icon {
-            font-size: 24px;
-            transition: transform 0.3s ease;
-        }
-
-        #soundToggle.active .icon {
-            transform: rotate(360deg);
-        }
-
-        /* Sobreposição no vídeo */
+        /* Sobreposição de gradiente */
         .video-overlay {
             position: absolute;
             top: 0;
@@ -66,29 +33,79 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
             color: #f1c40f;
             text-align: center;
             font-family: 'Arial', sans-serif;
             pointer-events: none;
+            padding: 20px;
         }
 
         .video-overlay h2 {
-            font-size: 36px;
+            font-size: 40px;
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1.2s ease-out;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
         }
 
         .video-overlay p {
-            font-size: 18px;
+            font-size: 20px;
             margin: 10px 0 0;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1.5s ease-out;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Animações de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Botão de som estilizado */
+        #soundToggle {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #f1c40f;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #soundToggle:hover {
+            background: #f1c40f;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        #soundToggle .icon {
+            transition: transform 0.3s ease;
+        }
+
+        #soundToggle.active .icon {
+            transform: rotate(360deg);
         }
 
         /* Responsividade */
         @media (max-width: 768px) {
             .video-intro {
-                height: 250px;
+                height: 300px;
             }
 
             .video-overlay h2 {
@@ -103,6 +120,8 @@
                 width: 50px;
                 height: 50px;
                 font-size: 18px;
+                bottom: 20px;
+                right: 20px;
             }
         }
     </style>
