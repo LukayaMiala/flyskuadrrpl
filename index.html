@@ -175,69 +175,125 @@
             cursor: pointer;
         }
 
-        .video-intro {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
+         /* Container principal da área de vídeo */
+         .video-intro {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
 
-.video-intro video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+        .video-intro video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-}
+        /* Sobreposição de gradiente */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+            color: #f1c40f;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            pointer-events: none;
+            padding: 20px;
+        }
 
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-    color: #f1c40f;
-    text-align: center;
-    pointer-events: none;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 1s ease-out, transform 1s ease-out;
-}
+        .video-overlay h2 {
+            font-size: 40px;
+            margin: 0;
+            animation: fadeInUp 1.2s ease-out;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+        }
 
-.video-overlay.show {
-    opacity: 1;
-    transform: scale(1);
-}
+        .video-overlay p {
+            font-size: 20px;
+            margin: 10px 0 0;
+            animation: fadeInUp 1.5s ease-out;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
 
-.video-overlay.hide {
-    opacity: 0;
-    transform: scale(0.8);
-}
+        /* Animações de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Botão de som estilizado */
+        #soundToggle {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #f06909;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #soundToggle:hover {
+            background: #983d059f;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        #soundToggle .icon {
+            transition: transform 0.3s ease;
+        }
+
+        #soundToggle.active .icon {
+            transform: rotate(360deg);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .video-intro {
+                height: 300px;
+            }
+
+            .video-overlay h2 {
+                font-size: 28px;
+            }
+
+            .video-overlay p {
+                font-size: 16px;
+            }
+
+            #soundToggle {
+                width: 50px;
+                height: 50px;
+                font-size: 18px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
 
 /*Style para a sessão de venda de bilhetes*/
 /* Ticket Section */
@@ -909,7 +965,21 @@ submitReceiptButton.addEventListener('click', function() {
     window.location.href = whatsappURL; // Redireciona para o WhatsApp
 });
 
+        const video = document.getElementById('introVideo');
+        const soundToggle = document.getElementById('soundToggle');
+        const icon = soundToggle.querySelector('.icon');
 
+        soundToggle.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                icon.textContent = '🔇'; // Ícone para "Mute"
+                soundToggle.classList.add('active');
+            } else {
+                video.muted = true;
+                icon.textContent = '🔈'; // Ícone para "Unmute"
+                soundToggle.classList.remove('active');
+            }
+        });
 </script>
     
     <section class="games-section">
